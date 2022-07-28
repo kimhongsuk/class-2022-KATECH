@@ -1,0 +1,40 @@
+# ros2 can 의존성 패키지 설치 
+sudo apt-get install ros-foxy-can-msgs 
+
+# linuxcan 설치툴 설치 
+sudo apt-get install build-essential 
+sudo apt-get install dkms 
+
+# linuxcan build 
+cd linuxcan 
+make 
+sudo make install 
+sudo make load 
+
+# can 의존성 패키지 설치 
+sudo apt-get install can-utils 
+sudo apt-get install net-tools 
+sudo apt-get install libmuparser-dev 
+
+# can socket 생성 
+sudo modprobe can 
+sudo modprobe kvaser_usb 
+sudo ip link set can0 type can bitrate 500000 
+sudo ifconfig can0 up 
+
+# can socket 생성 확인 
+ifconfig 
+
+# can socket 종료 및 재실행 
+sudo ifconfig can0 down 
+sudo ifconfig can0 up 
+
+# ros2 can socket wrapper 설치 
+cd ~/dev_ws/src 
+git clone https://github.com/autowarefoundation/ros2_socketcan.git 
+cd .. 
+colcon build 
+source install/setup.bash 
+
+# ros2 can socket wrapper 실행 
+ros2 launch ros2_socketcan socket_can_bridge.launch.xml 

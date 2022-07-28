@@ -1,0 +1,13 @@
+# MRP 2000 - ROS2
+
+pip install pyserial
+sudo apt install ros-foxy-tf-transformation
+pip3 install transforms3d
+
+cd dev_ws/src/
+git clone https://github.com/ros-drivers/nmea_navsat_driver.git
+git checkout ros2
+
+vim ~/dev_ws/src/nmea_navsat_driver/config/nmea_serial_driver.yaml
+ port → /dev/ttyUSB0
+ baud → 115200
